@@ -6,30 +6,30 @@
 //
 
 import UIKit
+import Foundation
 
-extension StartScreenViewController: GameViewControllerDelegate{
+extension StartScreenViewController: GameViewControllerDelegate {
+    
     func didEndGame(withResult result: GameSession) {
+        
         game.gameSessions = result
         self.gameScore.text = "\(result.cashResult) руб."
         self.allQuestions.text = "\(result.allQuestions)"
         self.rightQuestionsScore.text = "\(result.rightAnswersCount)"
-        self.retio.text = "\(game.retio)"
-        print(game.records.count)
-        print("\(String(describing: game.records.last?.cashResult))")
+        self.ratio.text = "\(result.ratio)"
     }
-    
-    
 }
 
 class StartScreenViewController: UIViewController {
-
+    
     @IBOutlet weak var startGameButton: UIButton!
     @IBOutlet weak var gameScore: UILabel!
     
     @IBOutlet weak var rightQuestionsScore: UILabel!
     @IBOutlet weak var allQuestions: UILabel!
-    @IBOutlet weak var retio: UILabel!
+    @IBOutlet weak var ratio: UILabel!
     
+    @IBOutlet weak var questionsOrderLabel: UILabel!
     
     var game = Game.shared
     var gameSession = GameSession()
@@ -37,18 +37,24 @@ class StartScreenViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.gameScore.text = "\(game.records.last?.cashResult)"
-        print("\(game.records.last?.cashResult)")
+        NotificationCenter.default.addObserver(self, selector: #selector(randomQuestionsOrderAction), name: NSNotification.Name("\(QuestionsOrder.random)"), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(successivelyQuestionsOrderAction), name: NSNotification.Name("\(QuestionsOrder.successively)"), object: nil)
+        
+        
+        
+        self.gameScore.text = "\(gameSession.cashResult)"
         self.allQuestions.text = "\(gameSession.allQuestions)"
         self.rightQuestionsScore.text = "\(gameSession.rightAnswersCount)"
-        self.retio.text = "\(game.retio)"
-      
-        // Do any additional setup after loading the view.
+        self.ratio.text = "\(gameSession.ratio) %"
+        
+        
+        self.questionsOrderLabel.text = "Вопросы последовательно"
+        
+        
     }
     
-
-    
-//     MARK: - Navigation
+    //     MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier {
@@ -56,15 +62,27 @@ class StartScreenViewController: UIViewController {
             guard let destination = segue.destination as? GameSceneViewController
             else {return}
             destination.delegate = self
+            
         default:
+            
             break
         }
-    
     }
     
-
+    
     @IBAction func startGameButtonActions(_ sender: Any) {
-        game.addRecord(gameSession)
+        print("Игра началась")
+        
+    }
+    
+    @objc func successivelyQuestionsOrderAction() {
+        print("Наблюдатель увидел сообщение")
+        questionsOrderLabel.text = "Вопросы последовательно"
+    }
+    
+    @objc func randomQuestionsOrderAction() {
+        print("Наблюдатель увидел сообщение")
+        questionsOrderLabel.text = "Вопросы в случайном порядке"
     }
     
     

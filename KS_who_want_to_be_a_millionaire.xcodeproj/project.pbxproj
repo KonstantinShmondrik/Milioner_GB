@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		00301B1227DA610200E72D01 /* RecordsCaretacer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00301B1127DA610200E72D01 /* RecordsCaretacer.swift */; };
+		00301B1527DA66BE00E72D01 /* RecordsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00301B1427DA66BE00E72D01 /* RecordsTableViewController.swift */; };
+		00301B1727DA795700E72D01 /* RecordsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00301B1627DA795700E72D01 /* RecordsTableViewCell.swift */; };
+		00301B1A27DCFB0900E72D01 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00301B1927DCFB0900E72D01 /* SettingsViewController.swift */; };
+		00301B1C27DE1DC800E72D01 /* QuestionsOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00301B1B27DE1DC800E72D01 /* QuestionsOrder.swift */; };
+		00301B1F27DF759C00E72D01 /* QuestionOrderStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00301B1E27DF759C00E72D01 /* QuestionOrderStrategy.swift */; };
+		00301B2127DF778800E72D01 /* QuestionsOrderSuccessivelyStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00301B2027DF778800E72D01 /* QuestionsOrderSuccessivelyStrategy.swift */; };
+		00301B2327DF790A00E72D01 /* QuestionsOrderRandomStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00301B2227DF790A00E72D01 /* QuestionsOrderRandomStrategy.swift */; };
+		00301B2627DFACCE00E72D01 /* AddQuestionsScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00301B2527DFACCE00E72D01 /* AddQuestionsScreenViewController.swift */; };
+		00301B2927E07D5600E72D01 /* QuestionsCaretacer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00301B2827E07D5600E72D01 /* QuestionsCaretacer.swift */; };
 		0063243F27CCE41800F79622 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0063243E27CCE41800F79622 /* AppDelegate.swift */; };
 		0063244127CCE41800F79622 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0063244027CCE41800F79622 /* SceneDelegate.swift */; };
 		0063244627CCE41800F79622 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0063244427CCE41800F79622 /* Main.storyboard */; };
@@ -22,6 +32,16 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		00301B1127DA610200E72D01 /* RecordsCaretacer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordsCaretacer.swift; sourceTree = "<group>"; };
+		00301B1427DA66BE00E72D01 /* RecordsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordsTableViewController.swift; sourceTree = "<group>"; };
+		00301B1627DA795700E72D01 /* RecordsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordsTableViewCell.swift; sourceTree = "<group>"; };
+		00301B1927DCFB0900E72D01 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		00301B1B27DE1DC800E72D01 /* QuestionsOrder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionsOrder.swift; sourceTree = "<group>"; };
+		00301B1E27DF759C00E72D01 /* QuestionOrderStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionOrderStrategy.swift; sourceTree = "<group>"; };
+		00301B2027DF778800E72D01 /* QuestionsOrderSuccessivelyStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionsOrderSuccessivelyStrategy.swift; sourceTree = "<group>"; };
+		00301B2227DF790A00E72D01 /* QuestionsOrderRandomStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionsOrderRandomStrategy.swift; sourceTree = "<group>"; };
+		00301B2527DFACCE00E72D01 /* AddQuestionsScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddQuestionsScreenViewController.swift; sourceTree = "<group>"; };
+		00301B2827E07D5600E72D01 /* QuestionsCaretacer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionsCaretacer.swift; sourceTree = "<group>"; };
 		0063243B27CCE41800F79622 /* KS_who_want_to_be_a_millionaire.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KS_who_want_to_be_a_millionaire.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0063243E27CCE41800F79622 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0063244027CCE41800F79622 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -49,6 +69,51 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		00301B1327DA669200E72D01 /* Records */ = {
+			isa = PBXGroup;
+			children = (
+				00301B1427DA66BE00E72D01 /* RecordsTableViewController.swift */,
+				00301B1627DA795700E72D01 /* RecordsTableViewCell.swift */,
+			);
+			path = Records;
+			sourceTree = "<group>";
+		};
+		00301B1827DCFAD600E72D01 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				00301B1927DCFB0900E72D01 /* SettingsViewController.swift */,
+				00301B1B27DE1DC800E72D01 /* QuestionsOrder.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		00301B1D27DF74E600E72D01 /* Strategy */ = {
+			isa = PBXGroup;
+			children = (
+				00301B1E27DF759C00E72D01 /* QuestionOrderStrategy.swift */,
+				00301B2027DF778800E72D01 /* QuestionsOrderSuccessivelyStrategy.swift */,
+				00301B2227DF790A00E72D01 /* QuestionsOrderRandomStrategy.swift */,
+			);
+			path = Strategy;
+			sourceTree = "<group>";
+		};
+		00301B2427DFAC7A00E72D01 /* AddQuestionsScreen */ = {
+			isa = PBXGroup;
+			children = (
+				00301B2527DFACCE00E72D01 /* AddQuestionsScreenViewController.swift */,
+			);
+			path = AddQuestionsScreen;
+			sourceTree = "<group>";
+		};
+		00301B2727E07C8100E72D01 /* Caretacers */ = {
+			isa = PBXGroup;
+			children = (
+				00301B1127DA610200E72D01 /* RecordsCaretacer.swift */,
+				00301B2827E07D5600E72D01 /* QuestionsCaretacer.swift */,
+			);
+			path = Caretacers;
+			sourceTree = "<group>";
+		};
 		0063243227CCE41800F79622 = {
 			isa = PBXGroup;
 			children = (
@@ -85,6 +150,9 @@
 			children = (
 				0063245C27CD0EB500F79622 /* StartScreen */,
 				0063245427CCEB7700F79622 /* GameScene */,
+				00301B1827DCFAD600E72D01 /* Settings */,
+				00301B2427DFAC7A00E72D01 /* AddQuestionsScreen */,
+				00301B1327DA669200E72D01 /* Records */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -92,6 +160,8 @@
 		0063245327CCE4B300F79622 /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				00301B2727E07C8100E72D01 /* Caretacers */,
+				00301B1D27DF74E600E72D01 /* Strategy */,
 				0063245A27CCEE4500F79622 /* Questionslibrary.swift */,
 				0063245F27CD3EC900F79622 /* CustomsAnimationServise.swift */,
 				0063246127CD516A00F79622 /* Game.swift */,
@@ -197,14 +267,24 @@
 			buildActionMask = 2147483647;
 			files = (
 				0063245927CCECA700F79622 /* Question.swift in Sources */,
+				00301B1F27DF759C00E72D01 /* QuestionOrderStrategy.swift in Sources */,
+				00301B1227DA610200E72D01 /* RecordsCaretacer.swift in Sources */,
+				00301B1C27DE1DC800E72D01 /* QuestionsOrder.swift in Sources */,
 				0063245B27CCEE4500F79622 /* Questionslibrary.swift in Sources */,
 				0063246027CD3EC900F79622 /* CustomsAnimationServise.swift in Sources */,
+				00301B2627DFACCE00E72D01 /* AddQuestionsScreenViewController.swift in Sources */,
 				0063243F27CCE41800F79622 /* AppDelegate.swift in Sources */,
 				0063245E27CD0F0000F79622 /* StartScreenViewController.swift in Sources */,
+				00301B1727DA795700E72D01 /* RecordsTableViewCell.swift in Sources */,
 				0063244127CCE41800F79622 /* SceneDelegate.swift in Sources */,
 				0063245627CCEC2200F79622 /* GameSceneViewController.swift in Sources */,
+				00301B1527DA66BE00E72D01 /* RecordsTableViewController.swift in Sources */,
+				00301B2927E07D5600E72D01 /* QuestionsCaretacer.swift in Sources */,
+				00301B1A27DCFB0900E72D01 /* SettingsViewController.swift in Sources */,
+				00301B2327DF790A00E72D01 /* QuestionsOrderRandomStrategy.swift in Sources */,
 				0063246427CD518500F79622 /* GameSession.swift in Sources */,
 				0063246227CD516A00F79622 /* Game.swift in Sources */,
+				00301B2127DF778800E72D01 /* QuestionsOrderSuccessivelyStrategy.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

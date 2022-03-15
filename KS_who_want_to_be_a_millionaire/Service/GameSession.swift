@@ -7,12 +7,12 @@
 
 import Foundation
 
-class GameSession {
-//    var data: Data
+class GameSession: Codable {
+   
+    var data = Double(NSDate().timeIntervalSince1970)
     var cashResult: Int = 0
     var rightAnswersCount: Int = 0
     var allQuestions: Int = 0
-   
-    
+    var ratio: Int = 0
     
 }
