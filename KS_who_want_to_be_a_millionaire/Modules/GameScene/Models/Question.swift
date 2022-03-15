@@ -7,15 +7,15 @@
 
 import Foundation
 
-struct Question {
+struct Question: Codable {
     var textQuestion: String = ""
     var answerOptions: [String : String] = [:]
     var rightAnswer: String = ""
-  
-    init (textQuestion: String, answerOptions: [String : String], rightAnswer: String) {
     
-    self.textQuestion = textQuestion
-    self.answerOptions = answerOptions
-    self.rightAnswer = rightAnswer
+    init (textQuestion: String, answerOptions: [String : String], rightAnswer: String) {
+        
+        self.textQuestion = textQuestion
+        self.answerOptions = answerOptions
+        self.rightAnswer = rightAnswer
     }
 }

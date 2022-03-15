@@ -80,6 +80,18 @@ class Questionslibrary {
                               rightAnswer: "Вольт")
     
     
-    
+    var question11: [Question] = [Question(textQuestion: "",
+                               answerOptions: ["A" : "",
+                                               "B" : "",
+                                               "C" : "",
+                                               "D" : ""],
+                               rightAnswer: ""),
+                      Question(textQuestion: "",
+                                                 answerOptions: ["A" : "",
+                                                                 "B" : "",
+                                                                 "C" : "",
+                                                                 "D" : ""],
+                                                 rightAnswer: "")
+    ]
     
 }

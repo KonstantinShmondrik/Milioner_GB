@@ -6,23 +6,55 @@
 //
 
 import Foundation
-final class Game{
+
+final class Game {
     
     static let shared = Game()
     
-    private(set) var records: [GameSession] = []
-    var gameSessions: GameSession?
-    var retio: Int {
-        let ret = (gameSessions?.rightAnswersCount ?? 0) / (gameSessions?.allQuestions ?? 1) * 100
-        return ret
+    private init() {
+        self.records = self.recordsCaretacer.retriveRecords()
+        self.questions = self.questionCaretacer.retriveQuestion()
     }
     
-    private init(){}
-    func addRecord(_ record: GameSession){
+    private var recordsCaretacer = RecordsCaretacer()
+    private var questionCaretacer = QuestionsCaretacer()
+    
+    private(set) var records: [GameSession] {
+        didSet {
+            recordsCaretacer.seve(records: self.records)
+        }
+    }
+    
+    private(set) var questions: [Question] {
+        didSet {
+            questionCaretacer.seve(question: self.questions)
+        }
+    }
+    
+    var gameSessions: GameSession?
+    
+    var ratio: Int {
+        let result = (gameSessions?.rightAnswersCount ?? 0) / (gameSessions?.allQuestions ?? 1 ) * 100
+        //        print("\(gameSessions?.rightAnswersCount) \(gameSessions?.allQuestions)")
+        return result
+    }
+    
+    
+    var questionsOrder: QuestionsOrder = .successively
+    
+    func addRecord(_ record: GameSession) {
         self.records.append(record)
     }
     
-    func clearRecords(){
+    func clearRecords() {
         self.records = []
+    }
+    
+    func addQuestion(_ question: Question) {
+        self.questions.append(question)
+    }
+    
+    func clearQuestion() {
+        self.questions = []
     }
 }

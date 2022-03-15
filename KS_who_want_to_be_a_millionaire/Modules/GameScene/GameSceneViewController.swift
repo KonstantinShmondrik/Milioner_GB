@@ -7,34 +7,23 @@
 
 import UIKit
 
-//protocol GameSceneDelegat: class {
-//    func didEndGame(withResult result: Int)
-//}
 
 protocol GameViewControllerDelegate: AnyObject {
+    
     func didEndGame(withResult result: GameSession)
 }
 
 class GameSceneViewController: UIViewController, GameViewControllerDelegate {
-    func didEndGame(withResult result: GameSession) {
-        self.delegate?.didEndGame(withResult: result)
-        self.dismiss(animated: true, completion: nil)
-    }
     
+    
+    
+    @IBOutlet weak var ExitButton: UIButton!
     
     @IBOutlet weak var textQuestion: UILabel!
     
-    @IBOutlet weak var textFoneView: UIView!{
+    @IBOutlet weak var textQuestionView: UIView! {
         didSet{
-            self.textFoneView.layer.borderColor = UIColor.gray.cgColor
-            self.textFoneView.layer.borderWidth = 0.5
-            self.textFoneView.clipsToBounds = true
-            self.textFoneView.layer.cornerRadius = self.textFoneView.frame.width / 6
-            self.textFoneView.layer.shadowColor = UIColor.black.cgColor
-            self.textFoneView.layer.shadowRadius = 7
-            self.textFoneView.layer.shadowOffset = CGSize.zero
-            self.textFoneView.layer.shadowOpacity = 0.5
-            self.textFoneView.backgroundColor = .systemGray
+            animations.setTextFoneView(textFoneView: textQuestionView)
             
         }
     }
@@ -44,92 +33,208 @@ class GameSceneViewController: UIViewController, GameViewControllerDelegate {
     @IBOutlet weak var answerC: UILabel!
     @IBOutlet weak var answerD: UILabel!
     
-    @IBOutlet weak var answerAView: UIView!{
-        didSet{
+    @IBOutlet weak var answerAView: UIView! {
+        didSet {
             let tap = UITapGestureRecognizer(target: self, action: #selector(answerAAction))
             answerAView.isUserInteractionEnabled = true
             answerAView.addGestureRecognizer(tap)
             
-            self.answerAView.layer.borderColor = UIColor.gray.cgColor
-            self.answerAView.layer.borderWidth = 0.5
-            self.answerAView.clipsToBounds = true
-            self.answerAView.layer.cornerRadius = self.answerAView.frame.width / 10
-            self.answerAView.layer.shadowColor = UIColor.black.cgColor
-            self.answerAView.layer.shadowRadius = 7
-            self.answerAView.layer.shadowOffset = CGSize.zero
-            self.answerAView.layer.shadowOpacity = 0.5
-            self.answerAView.backgroundColor = .systemGray2
+            animations.setButtonView(button: answerAView)
         }
     }
-    @IBOutlet weak var answerBView: UIView!{
-        didSet{
+    
+    @IBOutlet weak var answerBView: UIView! {
+        didSet {
             let tap = UITapGestureRecognizer(target: self, action: #selector(answerBAction))
             answerBView.isUserInteractionEnabled = true
             answerBView.addGestureRecognizer(tap)
             
-            self.answerBView.layer.borderColor = UIColor.gray.cgColor
-            self.answerBView.layer.borderWidth = 0.5
-            self.answerBView.clipsToBounds = true
-            self.answerBView.layer.cornerRadius = self.answerBView.frame.width / 10
-            self.answerBView.layer.shadowColor = UIColor.black.cgColor
-            self.answerBView.layer.shadowRadius = 7
-            self.answerBView.layer.shadowOffset = CGSize.zero
-            self.answerBView.layer.shadowOpacity = 0.5
-            self.answerBView.backgroundColor = .systemGray2
+            animations.setButtonView(button: answerBView)
         }
     }
-    @IBOutlet weak var answerCView: UIView!{
-        didSet{
+    
+    @IBOutlet weak var answerCView: UIView! {
+        didSet {
             let tap = UITapGestureRecognizer(target: self, action: #selector(answerCAction))
             answerCView.isUserInteractionEnabled = true
             answerCView.addGestureRecognizer(tap)
             
-            self.answerCView.layer.borderColor = UIColor.gray.cgColor
-            self.answerCView.layer.borderWidth = 0.5
-            self.answerCView.clipsToBounds = true
-            self.answerCView.layer.cornerRadius = self.answerCView.frame.width / 10
-            self.answerCView.layer.shadowColor = UIColor.black.cgColor
-            self.answerCView.layer.shadowRadius = 7
-            self.answerCView.layer.shadowOffset = CGSize.zero
-            self.answerCView.layer.shadowOpacity = 0.5
-            self.answerCView.backgroundColor = .systemGray2
+            animations.setButtonView(button: answerCView)
         }
     }
-    @IBOutlet weak var answerDView: UIView!{
-        didSet{
+    
+    @IBOutlet weak var answerDView: UIView! {
+        didSet {
             let tap = UITapGestureRecognizer(target: self, action: #selector(answerDAction))
             answerDView.isUserInteractionEnabled = true
             answerDView.addGestureRecognizer(tap)
             
-            self.answerDView.layer.borderColor = UIColor.gray.cgColor
-            self.answerDView.layer.borderWidth = 0.5
-            self.answerDView.clipsToBounds = true
-            self.answerDView.layer.cornerRadius = self.answerDView.frame.width / 10
-            self.answerDView.layer.shadowColor = UIColor.black.cgColor
-            self.answerDView.layer.shadowRadius = 7
-            self.answerDView.layer.shadowOffset = CGSize.zero
-            self.answerDView.layer.shadowOpacity = 0.5
-            self.answerDView.backgroundColor = .systemGray2
+            animations.setButtonView(button: answerDView)
+            
         }
     }
     
     @IBOutlet weak var resultLable: UILabel!
     
-//    weak var gameDelegate: GameSceneDelegat?
     weak var delegate: GameViewControllerDelegate?
     
-    
     let animations = CustomsAnimationServise()
+    let game = Game.shared
+    
     var question = Questionslibrary()
     var questionArr = [Question]()
     var geameSession = GameSession()
-    let game = Game.shared
     var rightAnswersCount = 0
     var cashResult = 0
-   
+    var questionsOrder = Game.shared.questionsOrder
+    
+    var questionsOrderStrategy: QuestionOrderStrategy {
+        switch questionsOrder {
+        case .successively:
+            return QuestionsOrderSuccessivelyStrategy()
+        case .random:
+            return QuestionsOrderRandomStrategy()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // добавляем вопросы в массив
+        addQuestions()
+        // отработка стратегии
+        questionArr = questionsOrderStrategy.questionOrder(questionArr: questionArr)
+        
+        getAnswer(i: rightAnswersCount)
+        
+        
+    }
+    
+    //MARK: - Ответ A
+    
+    @objc func answerAAction(sender:UITapGestureRecognizer) {
+        
+        animations.clickButton(button: answerAView)
+        
+        if questionArr[rightAnswersCount].rightAnswer == questionArr[rightAnswersCount].answerOptions["A"] {
+            
+            rightAnswersCount += 1
+            cashResult += 100
+            getNextAnswer(i: rightAnswersCount)
+            
+            geameSession.cashResult = cashResult
+            geameSession.rightAnswersCount = rightAnswersCount
+            geameSession.allQuestions = questionArr.count
+            geameSession.ratio = geameSession.rightAnswersCount / geameSession.allQuestions * 100
+            //            game.gameSessions?.cashResult = cashResult
+            //            game.gameSessions?.rightAnswersCount = rightAnswersCount
+            //            game.gameSessions?.allQuestions = questionArr.count
+            //            game.gameSessions = geameSession
+            
+        } else {
+            
+            self.delegate?.didEndGame(withResult: geameSession)
+            game.addRecord(geameSession)
+            self.dismiss(animated: true, completion: nil)
+        }
+    }
+    
+    //MARK: - Ответ B
+    @objc func answerBAction(sender:UITapGestureRecognizer) {
+        
+        animations.clickButton(button: answerBView)
+        
+        if questionArr[rightAnswersCount].rightAnswer == questionArr[rightAnswersCount].answerOptions["B"] {
+            rightAnswersCount += 1
+            cashResult += 100
+            getNextAnswer(i: rightAnswersCount)
+            
+            geameSession.cashResult = cashResult
+            geameSession.rightAnswersCount = rightAnswersCount
+            geameSession.allQuestions = questionArr.count
+            geameSession.ratio = geameSession.rightAnswersCount / geameSession.allQuestions * 100
+            
+        } else {
+            
+            self.delegate?.didEndGame(withResult: geameSession)
+            game.addRecord(geameSession)
+            self.dismiss(animated: true, completion: nil)
+        }
+    }
+    
+    //MARK: - Ответ C
+    @objc func answerCAction(sender:UITapGestureRecognizer) {
+        
+        animations.clickButton(button: answerCView)
+        
+        if questionArr[rightAnswersCount].rightAnswer == questionArr[rightAnswersCount].answerOptions["C"] {
+            rightAnswersCount += 1
+            cashResult += 100
+            
+            getNextAnswer(i: rightAnswersCount)
+            geameSession.cashResult = cashResult
+            geameSession.rightAnswersCount = rightAnswersCount
+            geameSession.allQuestions = questionArr.count
+            geameSession.ratio = geameSession.rightAnswersCount / geameSession.allQuestions * 100
+        } else {
+            
+            self.delegate?.didEndGame(withResult: geameSession)
+            game.addRecord(geameSession)
+            self.dismiss(animated: true, completion: nil)
+            
+        }
+    }
+    
+    //MARK: - Ответ D
+    @objc func answerDAction(sender:UITapGestureRecognizer) {
+        
+        animations.clickButton(button: answerDView)
+        
+        if questionArr[rightAnswersCount].rightAnswer == questionArr[rightAnswersCount].answerOptions["D"] {
+            rightAnswersCount += 1
+            cashResult += 100
+            getNextAnswer(i: rightAnswersCount)
+            
+            geameSession.cashResult = cashResult
+            geameSession.rightAnswersCount = rightAnswersCount
+            geameSession.allQuestions = questionArr.count
+            geameSession.ratio = rightAnswersCount / questionArr.count * 100
+            
+        } else {
+            
+            self.delegate?.didEndGame(withResult: geameSession)
+            game.addRecord(geameSession)
+            self.dismiss(animated: true, completion: nil)
+        }
+    }
+    
+    @IBAction func ExitButtonAction(_ sender: Any) {
+        
+        let alert = UIAlertController(title: "",
+                                      message: "Вы уверены, что хотите покинуть игру?",
+                                      preferredStyle: .alert)
+        let actionYes = UIAlertAction(title: "Да",
+                                      style: .cancel,
+                                      handler: {action in  self.delegate?.didEndGame(withResult: self.geameSession)
+            self.game.addRecord(self.geameSession)
+            self.dismiss(animated: true, completion: nil)})
+        
+        let actionNo = UIAlertAction(title: "Нет",
+                                     style: .default,
+                                     handler: nil)
+        
+        alert.addAction(actionYes)
+        alert.addAction(actionNo)
+        self.present(alert, animated: true,completion: nil)
+        
+        
+    }
+    
+    
+    // MARK: - Добовляем вопросы в игру
+    func addQuestions() {
+        
+        questionArr = game.questions
         
         questionArr.append(question.question1)
         questionArr.append(question.question2)
@@ -141,131 +246,53 @@ class GameSceneViewController: UIViewController, GameViewControllerDelegate {
         questionArr.append(question.question8)
         questionArr.append(question.question9)
         questionArr.append(question.question10)
-       
-        
-        getNextAnswer(i: rightAnswersCount)
-      
-        
-//       delegate = self
         
         
     }
     
-    //MARK: - Ответ A
-    
-    @objc func answerAAction(sender:UITapGestureRecognizer) {
-        animations.clickButton(button: answerAView)
-        if questionArr[rightAnswersCount].rightAnswer == questionArr[rightAnswersCount].answerOptions["A"] {
-            
-            rightAnswersCount += 1
-            cashResult += 100
-            getNextAnswer(i: rightAnswersCount)
-            
-            geameSession.cashResult = cashResult
-            geameSession.rightAnswersCount = rightAnswersCount
-            geameSession.allQuestions = questionArr.count
-//            game.gameSessions?.cashResult = cashResult
-//            game.gameSessions?.rightAnswersCount = rightAnswersCount
-//            game.gameSessions?.allQuestions = questionArr.count
-//            game.gameSessions = geameSession
-
-            
-            //            resultLable.text = "Текущий результат игры: \(result)"
-
-        } else {
-            
-            self.delegate?.didEndGame(withResult: geameSession)
-            game.addRecord(geameSession)
-            self.dismiss(animated: true, completion: nil)
-            
-            //        self.dismiss(animated: true, completion: nil)
-        }
+    //    MARK: - первый вопрос
+    func getAnswer (i: Int) {
+        
+        textQuestion.text = questionArr[i].textQuestion
+        answerA.text = "\( questionArr[i].answerOptions["A"] ?? "")"
+        answerB.text = "\( questionArr[i].answerOptions["B"] ?? "")"
+        answerC.text = "\( questionArr[i].answerOptions["C"] ?? "")"
+        answerD.text = "\( questionArr[i].answerOptions["D"] ?? "")"
+        
+        resultLable.text = "Текущий результат игры: \(cashResult)"
     }
     
-    //MARK: - Ответ B
-    @objc func answerBAction(sender:UITapGestureRecognizer) {
-        animations.clickButton(button: answerBView)
-        if questionArr[rightAnswersCount].rightAnswer == questionArr[rightAnswersCount].answerOptions["B"] {
-            rightAnswersCount += 1
-            cashResult += 100
-            getNextAnswer(i: rightAnswersCount)
-            
-            geameSession.cashResult = cashResult
-            geameSession.rightAnswersCount = rightAnswersCount
-            geameSession.allQuestions = questionArr.count
-        } else {
-            self.delegate?.didEndGame(withResult: geameSession)
-            game.addRecord(geameSession)
-            self.dismiss(animated: true, completion: nil)
-        }
-    }
-    
-    //MARK: - Ответ C
-    @objc func answerCAction(sender:UITapGestureRecognizer) {
-        animations.clickButton(button: answerCView)
-        if questionArr[rightAnswersCount].rightAnswer == questionArr[rightAnswersCount].answerOptions["C"] {
-            rightAnswersCount += 1
-            cashResult += 100
-           
-            getNextAnswer(i: rightAnswersCount)
-            geameSession.cashResult = cashResult
-            geameSession.rightAnswersCount = rightAnswersCount
-            geameSession.allQuestions = questionArr.count
-        } else {
-            self.delegate?.didEndGame(withResult: geameSession)
-            game.addRecord(geameSession)
-            self.dismiss(animated: true, completion: nil)
-        }
-    }
-    
-    //MARK: - Ответ D
-    @objc func answerDAction(sender:UITapGestureRecognizer) {
-        animations.clickButton(button: answerDView)
-        if questionArr[rightAnswersCount].rightAnswer == questionArr[rightAnswersCount].answerOptions["D"] {
-            rightAnswersCount += 1
-            cashResult += 100
-            getNextAnswer(i: rightAnswersCount)
-            
-            geameSession.cashResult = cashResult
-            geameSession.rightAnswersCount = rightAnswersCount
-            geameSession.allQuestions = questionArr.count
-        } else {
-            self.delegate?.didEndGame(withResult: geameSession)
-            game.addRecord(geameSession)
-            self.dismiss(animated: true, completion: nil)
-        }
-    }
-    
-    
+    //    MARK: - следующие вопросы
     func getNextAnswer (i: Int) {
-        if i < (questionArr.count-1){
+        
+        if i < (questionArr.count) {
+            
             textQuestion.text = questionArr[i].textQuestion
             answerA.text = "\( questionArr[i].answerOptions["A"] ?? "")"
             answerB.text = "\( questionArr[i].answerOptions["B"] ?? "")"
             answerC.text = "\( questionArr[i].answerOptions["C"] ?? "")"
             answerD.text = "\( questionArr[i].answerOptions["D"] ?? "")"
-           
-            geameSession.cashResult = cashResult
-            geameSession.rightAnswersCount = rightAnswersCount
-            geameSession.allQuestions = questionArr.count
             
+            geameSession.cashResult = cashResult
+            geameSession.rightAnswersCount = rightAnswersCount + 1 // не подтягивается
+            geameSession.allQuestions = questionArr.count
+            geameSession.ratio = geameSession.rightAnswersCount / geameSession.allQuestions * 100
             resultLable.text = "Текущий результат игры: \(cashResult)"
+            
         } else {
+            
+            geameSession.rightAnswersCount = rightAnswersCount
+            geameSession.cashResult = cashResult
             self.delegate?.didEndGame(withResult: geameSession)
             game.addRecord(geameSession)
             self.dismiss(animated: true, completion: nil)
+            
         }
-        
     }
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
+    // MARK: - Окончание игры
+    func didEndGame(withResult result: GameSession) {
+        
+        self.delegate?.didEndGame(withResult: result)
+        self.dismiss(animated: true, completion: nil)
+    }
 }
